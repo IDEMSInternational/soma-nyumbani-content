@@ -1,0 +1,31 @@
+{
+    "name":"Mirroring Moves",
+    "type":"Session Guide",
+    "Session Outline":{
+        "Description":"This physical activity session aims to allow teachers and learners to engage in a joint activity that will serve as an icebreaker and help establish a friendly yet purposeful learning relationship. The basis around it is making a fun ‘move’ (see below) for others to ‘mirror’ (see below). It is meant to not be particularly physically demanding but help learners and teachers be active, while at the same time engender a positive, fun attitude towards community based learning.",
+        "Session Objectives":["Engage in a physical activity to remain active and healthy.","Develop a sense of belonging within their learning group and team working skills.","Establish a good teacher-learner relationship."],
+        "Areas Involved":{
+            "Citizenship":[],
+            "Environment":[],
+            "Creative Arts":["Music and dance"],
+            "Language":[],
+            "Games and fitness":[]
+        },
+        "Areas Involved 2":{
+            "Creative Arts":{
+                "Music and dance":4
+            },
+            "Life skills":{
+                "Making decisions":2,
+                "Self-esteem":3
+            },
+            "Games and fitness":{"Dancing":1}
+        }
+    },
+    "Activities":[
+        {
+            "name":"Warmup",
+            "Objectives":"To set out the general idea of the session and engage with students in a friendly manner to establish a good relationship."
+        }
+    ]
+}
