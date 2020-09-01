@@ -1,1 +1,1 @@
-print("hello John")
+function print("hello John")
