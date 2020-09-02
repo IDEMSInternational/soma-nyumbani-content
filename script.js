@@ -1,1 +1,1 @@
-function print("hello John")
+console.log("hello")
