@@ -4,9 +4,10 @@ html_str = ""
 for line in squares:
     html_str = html_str + line
     
-h1split = html_str.split("h1")
+h1split = html_str.split("<h1><span>")
 for x in h1split:
-    print(x)
+    print(x + "          -------------------------------------               ")
+
 
 
 
