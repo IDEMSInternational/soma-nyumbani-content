@@ -3,20 +3,22 @@ squares = open('squares.html','r')
 html_str = ""
 for line in squares:
     html_str = html_str + line
-    
+
+json = {}
+
 h1split = html_str.split("<h1><span>")
 count = 0
 for x in h1split:
-    print(count)
-    
-    print(h1split[count])
-    if count = 0:
-        #code to identify document title
+    if count == 0:
+        print(count)   #code to identify document titles
+    else:
+        index = x.index("<")
+        title = x[0:index] + "--"
+        #json[x[:index]= "hi"]
+        print(title)
     count = count + 1
     
     
-
-
 
 
 
