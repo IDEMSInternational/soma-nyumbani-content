@@ -29,14 +29,17 @@ for x in h1split:
         #nested process for isolating header2's
         h2split = tail1.split("<h2><span>")
         count2 = 0
+        json[head1] = {}
         #add entry to json dict that has h1 as a key and an open dict (to be filled with h2 and corresponding html) as value 
+        count2 = 0
         for y in h2split:
-            index2 = y.index("<")
-            head2 = y[0:index2]
-            tail2 = y[index2:]
-
-            #print(head2)
-                
+            if count2 != 0:
+                index2 = y.index("<")
+                head2 = y[0:index2]
+                tail2 = y[index2:]
+                json[head1][head2]=tail2[:5]
+                #print(head2)
+            count2 = count2 + 1   
 
         #json[head1]= tail1 (values of h1's are just html script)
             count2 = count2 + 1
@@ -50,3 +53,8 @@ for x in h1split:
 
 print(json["name"])
 print(json["type"])
+print(json["Session Outline"])
+print(json["Activity: Starter"])
+
+
+#remains to be done: altering "Activity Guide: ..." to just have the title, cropping html values (or not?)
