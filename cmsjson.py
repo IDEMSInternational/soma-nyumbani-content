@@ -5,8 +5,16 @@ for line in squares:
     html_str = html_str + line
     
 h1split = html_str.split("<h1><span>")
+count = 0
 for x in h1split:
-    print(x + "          -------------------------------------               ")
+    print(count)
+    
+    print(h1split[count])
+    if count = 0:
+        #code to identify document title
+    count = count + 1
+    
+    
 
 
 
