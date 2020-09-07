@@ -54,7 +54,7 @@ for x in h1split:
 print(json["name"])
 print(json["type"])
 print(json["Session Outline"])
-print(json["Activity: Starter"])
+
 
 
 #remains to be done: altering "Activity Guide: ..." to just have the title, cropping html values (or not?)
