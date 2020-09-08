@@ -1,6 +1,89 @@
-#reads an csm html file and converts it into a json file in which the headings are converted into elements and the remaining html is preserved
+#reads an csm html file and converts it into a json file in which the headings are
+#converted into elements and the remaining html is preserved
 json = {}
 
+#below is a dictionary of the "Areas involved", which will be used later for searching the html
+#and filling the json dict; search items perhaps should be truncated to account for potential typos
+areasdict = {
+    "Citizenship":[
+        "Values Formation",
+        "Social Responsibility",
+        "Social Entrepreneurship",
+        "Religious Activities",
+        "Socio-cultural Activities"
+    ],
+    "Environment":[
+        "Personal Hygiene",
+        "Hygiene and Conservation",
+        "Careers in Science",
+        "(Non)Communicable Diseases",
+        "Body Systems",
+        "Physical Exercise and Safety",
+        "Home Remedies and Simple First Aid",
+        "Environmental Conservation",
+        "Business Resources",
+        "Agribusiness"
+    ],
+    "Creative Arts": [
+        "Multi-media cards", # verify spacing between words and dash; powerpoint is confusing
+        "Draw and paint pictures",
+        "Craft activities",
+        "Music and dance",
+        "Drama",
+        "Videography and photography"
+    ],
+    "Language": [
+        "Language games",
+        "Debates",
+        "Public speaking",
+        "Poetry",
+        "Oral Literature",
+        "Reading",
+        "Writing"
+    ],
+    "Games and fitness": [
+        "Running games",
+        "Dancing",
+        "Athletics",
+        "Aerobics"
+    ],
+    "Life skills": [
+        "Self-aware",
+        "Stop Bullying and Violence", #arbitrary capitalization that should be addressed. ooh 
+                                     #maybe I can use a lowercase function to account for that
+                                     #I have not done that yet (delete when complete)
+        "Time Management",
+        "Making decisions",
+        "Leadership",
+        "Communication",
+        "Self-esteem",
+        "Conflict resolution",
+        "Choosing subjects and careers",
+        "Study and organisational skills", #there's a comma after this item in the powerpoint
+        "Goal setting",
+        "Daily Living Skills"
+    ],
+    "Home science": [
+        "Personal hygiene",
+        "Clothes",
+        "Foods",
+        "Care of the home and compound",
+        "Consumer awareness"
+    ],
+    "Mathematics and Financial literacy": [
+        #In the powerpoint there are two subheaders with respective lists
+        #For now, I am treating it all as one list
+        "Geometry shapes",
+        "Math Brain Teasers",
+        "Trick Questions",
+        "Riddles",
+        "Ratios and Proportions",
+        "The Number System",
+        "Expressions and Equations",
+        "Self-assessment",
+        "Self-discovery" #What do these last two have to do with financial literacy?
+    ]
+}
 
 squares = open('squares.html','r')
 html_str = ""
@@ -50,16 +133,14 @@ for x in h1split:
 
         #json[head1]= tail1 (values of h1's are just html script)
             count2 = count2 + 1
-        
+for key in 
 
 
     count1 = count1 + 1
     #print("")
     #print("")
     #print("")
-for key in json.keys():
-    print(key)
-
+print(json["Session Outline"]["Areas involved"])
 
 
 
