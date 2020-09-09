@@ -100,7 +100,7 @@ for x in h1split:
             json["type"] = "Session Guide"
             titleindex = x.find("Session Guide: ") + len("Session Guide: ")
             penpiece = x[titleindex:].split("<")[0]
-            json["name"] = penpiece
+            json["title"] = penpiece
 
           #code to identify document titles
     else:
@@ -127,7 +127,35 @@ for x in h1split:
                 index2 = y.index("</span></h2>")
                 head2 = y[0:index2]
                 tail2 = y[index2 + len("</span></h2>"):]
-                json[head1][head2]=tail2
+                if head1 == "Session Outline" and head2 == "Areas involved":
+                    json[head2]= {}
+                    ulsplit = tail2.split("<ul>")
+                    countul = 0
+                    count3 = 0
+                    head3 = "first"
+                    #print(tail2)
+                    for act in ulsplit:
+                        if countul != 0:
+                            lisplit = act.split("<li><span>")
+                            countli = 0
+                            for li in lisplit:
+                                #print(li)
+                                if countli != 0:
+                                    liindex = li.index("</span></li>")
+                                    lihead = li[:liindex]
+                                    print(lihead + " " + str(countul)) 
+                                    if countul % 2 != 0:
+                                        json[head2][lihead]= {}
+                                        head3 = lihead
+                                    else:
+                                        count3 += 1
+                                        json[head2][head3][lihead] = count3
+                                countli += 1
+                        countul += 1
+                elif head1 == "Session Outline" and head2 == "Description":
+                    json[head2]=tail2
+                else:
+                    json[head1][head2]=tail2
                 #print(head2)
             count2 = count2 + 1   
 
@@ -142,13 +170,13 @@ for x in h1split:
     #print("")
 #print(json["Session Outline"]["Areas involved"])
 
-for key in json["Towards a Pattern"].keys():
-    print(key)
 
+#print(json)
+print(json["Areas involved"])
     
 
 
 
-#remains to be done: altering "Activity Guide: :
+#remains to be done: 
 #                    delete html prefix with h2
 #                    process \n's
