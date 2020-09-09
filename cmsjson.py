@@ -1,9 +1,9 @@
-#reads an csm html file and converts it into a json file in which the headings are
+#reads an csm html file and converts it into a session file in which the headings are
 #converted into elements and the remaining html is preserved
-json = {}
-
+session = {}
+import json
 #below is a dictionary of the "Areas involved", which will be used later for searching the html
-#and filling the json dict; search items perhaps should be truncated to account for potential typos
+#and filling the session dict; search items perhaps should be truncated to account for potential typos
 areasdict = {
     "Citizenship":[
         "Values Formation",
@@ -85,9 +85,9 @@ areasdict = {
     ]
 }
 
-squares = open('squares.html','r')
+htmlfile = open('squares.html','r')
 html_str = ""
-for line in squares:
+for line in htmlfile:
     html_str = html_str + line
 
 
@@ -97,10 +97,10 @@ count1 = 0
 for x in h1split:
     if count1 == 0:
         if x.find("Session Guide") != -1:
-            json["type"] = "Session Guide"
+            session["type"] = "Session Guide"
             titleindex = x.find("Session Guide: ") + len("Session Guide: ")
             penpiece = x[titleindex:].split("<")[0]
-            json["title"] = penpiece
+            session["title"] = penpiece
 
           #code to identify document titles
     else:
@@ -112,15 +112,15 @@ for x in h1split:
         act = "Activity: "
         if head1.find(act) != -1:
             head1 = x[len(act):index1]
-            json[head1] = {}
-            json[head1]["type"] = "Activity"
+            session[head1] = {}
+            session[head1]["type"] = "Activity"
         else:
-            json[head1] = {}
+            session[head1] = {}
         tail1 = x[index1 + len("</span></h1>"):]
         #print(head1)
         #nested process for isolating header2's
         h2split = tail1.split("<h2><span>")
-        #add entry to json dict that has h1 as a key and an open dict (to be filled with h2 and corresponding html) as value 
+        #add entry to session dict that has h1 as a key and an open dict (to be filled with h2 and corresponding html) as value 
         count2 = 0
         for y in h2split:
             if count2 != 0:
@@ -128,7 +128,7 @@ for x in h1split:
                 head2 = y[0:index2]
                 tail2 = y[index2 + len("</span></h2>"):]
                 if head1 == "Session Outline" and head2 == "Areas involved":
-                    json[head2]= {}
+                    session[head2]= {}
                     ulsplit = tail2.split("<ul>")
                     countul = 0
                     count3 = 0
@@ -143,23 +143,23 @@ for x in h1split:
                                 if countli != 0:
                                     liindex = li.index("</span></li>")
                                     lihead = li[:liindex]
-                                    print(lihead + " " + str(countul)) 
+                                    #print(lihead + " " + str(countul)) 
                                     if countul % 2 != 0:
-                                        json[head2][lihead]= {}
+                                        session[head2][lihead]= {}
                                         head3 = lihead
                                     else:
                                         count3 += 1
-                                        json[head2][head3][lihead] = count3
+                                        session[head2][head3][lihead] = count3
                                 countli += 1
                         countul += 1
                 elif head1 == "Session Outline" and head2 == "Description":
-                    json[head2]=tail2
+                    session[head2]=tail2
                 else:
-                    json[head1][head2]=tail2
+                    session[head1][head2]=tail2
                 #print(head2)
             count2 = count2 + 1   
 
-        #json[head1]= tail1 (values of h1's are just html script)
+        #session[head1]= tail1 (values of h1's are just html script)
     
 
 
@@ -168,11 +168,13 @@ for x in h1split:
     #print("")
     #print("")
     #print("")
-#print(json["Session Outline"]["Areas involved"])
+#print(session["Session Outline"]["Areas involved"])
 
 
-#print(json)
-print(json["Areas involved"])
+
+with open('script.json', 'w') as outfile:
+    json.dump(session, outfile)
+
     
 
 
