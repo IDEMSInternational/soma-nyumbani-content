@@ -96,7 +96,7 @@ h1split = html_str.split("<h1><span>")
 count1 = 0
 for x in h1split:
     if count1 == 0:
-        if x.find("Session Guide") != 1:
+        if x.find("Session Guide") != -1:
             json["type"] = "Session Guide"
             titleindex = x.find("Session Guide: ") + len("Session Guide: ")
             penpiece = x[titleindex:].split("<")[0]
@@ -116,7 +116,7 @@ for x in h1split:
             json[head1]["type"] = "Activity"
         else:
             json[head1] = {}
-        tail1 = x[index1:]
+        tail1 = x[index1 + len("</span></h1>"):]
         #print(head1)
         #nested process for isolating header2's
         h2split = tail1.split("<h2><span>")
@@ -124,24 +124,31 @@ for x in h1split:
         count2 = 0
         for y in h2split:
             if count2 != 0:
-                index2 = y.index("<")
+                index2 = y.index("</span></h2>")
                 head2 = y[0:index2]
-                tail2 = y[index2:]
+                tail2 = y[index2 + len("</span></h2>"):]
                 json[head1][head2]=tail2
                 #print(head2)
             count2 = count2 + 1   
 
         #json[head1]= tail1 (values of h1's are just html script)
-            count2 = count2 + 1
-for key in 
+    
+
 
 
     count1 = count1 + 1
     #print("")
     #print("")
     #print("")
-print(json["Session Outline"]["Areas involved"])
+#print(json["Session Outline"]["Areas involved"])
+
+for key in json["Towards a Pattern"].keys():
+    print(key)
+
+    
 
 
 
-#remains to be done: altering "Activity Guide: 
+#remains to be done: altering "Activity Guide: :
+#                    delete html prefix with h2
+#                    process \n's
