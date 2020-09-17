@@ -1,8 +1,8 @@
+
 #reads an csm html file and converts it into a session file in which the headings are
 #converted into elements and the remaining html is preserved
 
 import json
-
 #below is a dictionary of the "Areas involved", which will be used later for searching the html
 #and filling the session dict; search items perhaps should be truncated to account for potential typos
  #
@@ -42,7 +42,7 @@ def cmstojson(filename):
                     else:
                         session[head1] = {}
                     tail1 = x[index1 + len("</span></h1>"):]
-
+                    #print(head1)
                     #nested process for isolating header2's
                     h2split = tail1.split("<h2 ><span >")
                     #add entry to session dict that has h1 as a key and an open dict (to be filled with h2 and corresponding html) as value 
@@ -55,21 +55,26 @@ def cmstojson(filename):
                             tail2 = y[index2 + len("</span></h2>"):]
                             if tail2.find("This work is licensed by IDEMS International") != -1:
                                 scrapindex = tail2.index("This work is licensed by IDEMS International")
-                                tail2 = y[index2 + len("</span></h2>"):(scrapindex-6)]
+                                tail2 = tail2[:(scrapindex)]
+                                session[head1][head2] = tail2
+
                             if head1 == "Session Outline" and head2 == "Areas involved":
                                 session[head2]= {}
-                                ulsplit = tail2.split("<ul >")
+                                ulsplit = tail2.split("<ul>")
                                 countul = 0
                                 count3 = 0
                                 head3 = "first"
+                                #print(tail2)
                                 for act in ulsplit:
                                     if countul != 0:
-                                        lisplit = act.split("<li ><span >")
+                                        lisplit = act.split("<li><span>")
                                         countli = 0
                                         for li in lisplit:
+                                            #print(li)
                                             if countli != 0:
                                                 liindex = li.index("</span></li>")
                                                 lihead = li[:liindex]
+                                                #print(lihead + " " + str(countul)) 
                                                 if countul % 2 != 0:
                                                     session[head2][lihead]= {}
                                                     head3 = lihead
@@ -82,37 +87,37 @@ def cmstojson(filename):
                                 session[head2]=tail2
                             else:
                                 session[head1][head2]=tail2
+                            #print(head2)
                         count2 = count2 + 1   
 
                     #session[head1]= tail1 (values of h1's are just html script)
                 
 
-
-
                 count1 = count1 + 1
+
+                #print("")
+                #print("")
+                #print("")
+            #print(session["Session Outline"]["Areas involved"])
 
             finaltitle = session["title"].lower() + ".json"
             finaltitle = finaltitle.split(" ")
             fts = ""
             for x in finaltitle:
                 fts += x
-            fts = "outputs/" + fts
-
+             
 
             with open(fts, 'w') as outfile:
                 json.dump(session, outfile)
+
+                print(key)
+
         countdoc += 1
 
 
 
+cmstojson("squares.html")
 
 
 
     
-
-cmstojson("inputs/day1.html")
-
-
-#remains to be done: 
-#                    delete html prefix with h2
-#                    process \n's
