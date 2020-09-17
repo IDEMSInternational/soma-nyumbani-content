@@ -2,12 +2,18 @@
 #converted into elements and the remaining html is preserved
 
 import json
-
+import os
 #below is a dictionary of the "Areas involved", which will be used later for searching the html
 #and filling the session dict; search items perhaps should be truncated to account for potential typos
  #
 
-def cmstojson(filename):
+def cmstojson(filename,outputfolder):
+    try:
+        os.mkdir("outputs/" + outputfolder)
+    except OSError:
+        print ("Creation of the directory %s failed" % path)
+    else:
+        print ("Successfully created the directory %s" % path)
     htmlfile = open(filename,'r')
     html_str = ""
     for line in htmlfile:
@@ -96,7 +102,7 @@ def cmstojson(filename):
             fts = ""
             for x in finaltitle:
                 fts += x
-            fts = "outputs/" + fts
+            fts = "outputs/" + outputfolder + "/" + fts
 
 
             with open(fts, 'w') as outfile:
@@ -105,7 +111,13 @@ def cmstojson(filename):
 
 
 
-
+directory = r'/Users/johnargentino/soma-nyumbani-content/inputs'
+for day in os.listdir(directory):
+    if day.endswith(".html"):
+        string = "inputs/" + day
+        path = day[:-5]
+        print(path)
+        cmstojson(string,path)
 
 
     
