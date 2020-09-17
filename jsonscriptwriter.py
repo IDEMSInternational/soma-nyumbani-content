@@ -1,4 +1,10 @@
 import  cmsjson
+import  os
 
-#cmstojson("Replace this string with the name of the html file being read ('day1.html' for example)")
-cmsjson.cmstojson("inputs/day1.html")
+directory = r'/Users/johnargentino/soma-nyumbani-content/inputs'
+for day in os.listdir(directory):
+    if day.endswith(".html"):
+        string = "inputs/" + day
+        path = "/soma-nyumbani-content/outputs/" + day[:-5]
+        print(path)
+        cmsjson.cmstojson(string)

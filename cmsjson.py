@@ -110,7 +110,7 @@ def cmstojson(filename):
 
     
 
-cmstojson("inputs/day1.html")
+#cmstojson("inputs/day1.html")
 
 
 #remains to be done: 
