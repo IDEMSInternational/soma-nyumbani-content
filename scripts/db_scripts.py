@@ -3,13 +3,17 @@ import os
 import couchdb
 
 # upload a json document to the database
+# including pdf attachment (identified in outputs folder from id)
 # note - should contain _id field as document id 
 def upload_to_db(doc):
     print("id:",doc["_id"])
     DB_URL = os.getenv("DB_URL")
     if DB_URL:
         couch=couchdb.Server(DB_URL)
-        db = couch["somanyumbani_testing"]
+        db_name="somanyumbani_"+doc["database_name"]
+        del doc["database_name"]
+        del doc["gdoc_id"]
+        db = couch[db_name]
         attachment = open('outputs/'+ doc["_id"]+'.pdf', 'rb')
         try:
             # check for existing docs, if found check if identical to
