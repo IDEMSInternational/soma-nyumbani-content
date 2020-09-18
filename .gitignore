@@ -1,0 +1,6 @@
+outputs
+.env
+**__pycache__
+credentials.json
+token.pickle
+.vscode
