@@ -31,10 +31,10 @@ def cms_session_to_json(session):
             act = "Activity: "
             if head1.find(act) != -1:
                 head1 = x[len(act):index1]
-                session[head1] = {}
-                session[head1]["type"] = "Activity"
+                session[format_key(head1)] = {}
+                session[format_key(head1)]["type"] = "Activity"
             else:
-                session[head1] = {}
+                session[format_key(head1)] = {}
             tail1 = x[index1 + len("</span></h1>"):]
 
             #nested process for isolating header2's
@@ -51,7 +51,7 @@ def cms_session_to_json(session):
                         scrapindex = tail2.index("This work is licensed by IDEMS International")
                         tail2 = y[index2 + len("</span></h2>"):(scrapindex-6)]
                     if head1 == "Session Outline" and head2 == "Areas involved":
-                        session[head2]= {}
+                        session[format_key(head2)]= {}
                         ulsplit = tail2.split("<ul >")
                         countul = 0
                         count3 = 0
@@ -65,28 +65,33 @@ def cms_session_to_json(session):
                                         liindex = li.index("</span></li>")
                                         lihead = li[:liindex]
                                         if countul % 2 != 0:
-                                            session[head2][lihead]= {}
+                                            session[format_key(head2)][format_key(lihead)]= {}
                                             head3 = lihead
                                         else:
                                             count3 += 1
-                                            session[head2][head3][lihead] = count3
+                                            session[format_key(head2)][format_key(head3)][format_key(lihead)] = count3
                                     countli += 1
                             countul += 1
                     elif head1 == "Session Outline" and head2 == "Description":
-                        session[head2]=tail2
+                        session[format_key(head2)]=tail2
                     else:
-                        session[head1][head2]=tail2
+                        session[format_key(head1)][format_key(head2)]=tail2
                 count2 = count2 + 1   
 
-        #session[head1]= tail1 (values of h1's are just html script)
+        #session[format_key(head1)]= tail1 (values of h1's are just html script)
 
-    finaltitle = session["title"].lower().strip()
-    session["slug"] = "-".join(finaltitle.split(" "))
+    session["slug"] = format_slug(session["title"])
     del session['doc']
     return session
 
+# convert string to lower case and replace spaces with underscores for use
+# as json object database keys
+def format_key(text: str) -> str:
+    return "_".join(text.lower().strip().split(" "))
 
-        
+# similar to format_key, but use '-' instead of '_'
+def format_slug(text: str) -> str:
+    return "-".join(text.lower().strip().split(" "))    
 
 
 
